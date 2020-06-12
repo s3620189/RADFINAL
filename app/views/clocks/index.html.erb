@@ -1,0 +1,69 @@
+<% provide(:title, 'Clock+') %>
+<body style="background-color: <%= @colours %> " >
+
+
+<div class = "info">
+<%= render 'info' %>
+
+</div>
+
+
+<% if @default_city %>
+<div class= "btn">
+<%= array=@default_city.utc.split(',')[0] %>
+<%= button_to "X", root_path, method: :get, params:{click: true}, class: 'close' %>
+  <%= @show_time %>
+  <br>
+  <%= @default_city.offset-10 %>h
+  <br>
+  <%= show_info(@default_city.offset)%>
+  <% if (Time.now+@default_city.offset.hours).hour>=23.hour or (Time.now+@default_city.offset.hours).hour<8.hour %>
+    <svg class="bi bi-moon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" >
+        <path fill-rule="evenodd" d="M14.53 10.53a7 7 0 0 1-9.058-9.058A7.003 7.003 0 0 0 8 15a7.002 7.002 0 0 0 6.53-4.47z" />
+        
+    </svg>
+  <% end %>
+
+<% end %>
+<br>
+
+<%  @array.each do |zone| %>
+
+<%= zone.utc.split(',')[0] %>
+<br>
+<%= (@time+zone.offset.hours).strftime("%H:%M:%S")%>
+<br>
+<%= zone.offset+10 %>h
+<br>
+<%= show_info(zone.offset) %>
+
+
+<% if (Time.now+zone.offset.hours).hour>=23 or (Time.now+zone.offset.hours).hour<8 %>
+    <svg class="bi bi-moon" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" >
+        <path fill-rule="evenodd" d="M14.53 10.53a7 7 0 0 1-9.058-9.058A7.003 7.003 0 0 0 8 15a7.002 7.002 0 0 0 6.53-4.47z" />
+        
+    </svg>
+  <% end %>
+<%= button_to "X", root_path, method: :get, params:{click2: zone}, class: 'close' %>
+<br>
+<% end %>
+
+<div class= "btn">
+<%= link_to "+", show_path, class: 'button' %>
+</div>
+</div>
+
+ <div class = "btn">
+<% if session[:convert] %>
+
+<%= button_to "Convert time", root_path, method: :get, params:{convert: true}, class: 'btn' %>
+<% else %>
+<%= button_to "Convert time", root_path, method: :get, params:{convert2: false}, class: 'btn' %>
+<% end %>
+</div>
+<div class = "btn-group">
+<%= button_to "white", root_path, method: :get, params:{colour: "white"}, class: 'btn' %>
+ <%= button_to "black", root_path, method: :get, params:{colour: "black"}, class: 'btn' %>
+ <%= button_to "grey", root_path, method: :get, params:{colour: "grey"}, class: 'btn' %>
+ </div>
+</body>

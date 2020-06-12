@@ -1,0 +1,31 @@
+<% provide(:title, 'Clock+') %>
+<%= render 'info' %>
+
+
+
+
+<%= form_tag(show_path, :method => "get",   
+    class: 'navbar-form navbar-left') do %>  
+  <div class="input-group">  
+    <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>  
+    <div class="input-group-btn">  
+      <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>  
+    </div>  
+  </div>  
+<% end %>
+
+ <% if @zone_abbrs %>
+ <% @zone_abbrs.each do |zone| %>
+ <%= zone.abbr %>
+ <% end %>
+ <% end %>
+
+
+<% if session[:convert] %>
+<%= button_to "Convert time", root_path, method: :get, params:{convert: true}, class: 'btn' %>
+<% else %>
+<%= button_to "Convert time", root_path, method: :get, params:{convert2: false}, class: 'btn' %>
+<% end %>
+
+
+
