@@ -33,7 +33,7 @@ def index
       session[:test]=params[:convert2]
       @convert=params[:convert2]
       
-       @show_time=(@time+@default_city.offset.hours).strftime("%H:%M:%S")
+       @show_time=(@time+10.hours).strftime("%H:%M:%S")
     end
     
     if params[:click2]
